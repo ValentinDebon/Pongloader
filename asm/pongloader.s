@@ -160,7 +160,7 @@ start:
 is_colliding:			# is_colliding(ypos: %al) : %ax=0 if(yball>=%al || yball<=%al+4)
 	cmpb	%al,-3(%bp)
 	jl	.COLLIDE_FALSE
-	add	$4,%al
+	add	$3,%al
 	cmpb	%al,-3(%bp)
 	jle	.COLLIDE_TRUE
 .COLLIDE_FALSE:
