@@ -157,7 +157,7 @@ start:
 	int	$0x15			# The delay
 	jmp	.L_1
 
-is_colliding:			# is_colliding(ypos: %al) : %ax=0 if(yball>=%al || yball<=%al+4)
+is_colliding:			# is_colliding(ypos: %al) : %ax=0 if(yball>=%al and yball<=%al+3)
 	cmpb	%al,-3(%bp)
 	jl	.COLLIDE_FALSE
 	add	$3,%al
