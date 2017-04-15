@@ -25,7 +25,7 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    *
 **********************************************************************************/
 
-.org	0x0000	# adress 0x0000 at segment 0x07C0
+.org	0x7C00
 /*
 	calling convention: every register must be saved for draw_char and is_colliding,
 	freedom for other functions
@@ -33,11 +33,7 @@
 
 .code16		# real mode
 start:
-	mov	%cs, %ax		# %cs should be 0x07C0
-	mov	%ax, %ds		# Set data segment according to the executable position
-	mov	%ax, %es		# Set extra segment
-	mov	%ax, %ss		# Set stack segment
-	mov	$0x400,%bp		# Arbitrary value, 16 bytes aligned, >512
+	mov	$0x600,%bp		# Arbitrary value, 16 bytes aligned, >512
 	mov	%bp,%sp			# Can finally use a proper stack
 	push	$0x0000			# Score Right<<8 | Score Left
 	push	$0x0C28			# y<<8 | x
@@ -157,7 +153,7 @@ start:
 	int	$0x15			# The delay
 	jmp	.L_1
 
-is_colliding:			# is_colliding(ypos: %al) : %ax=0 if(yball>=%al and yball<=%al+3)
+is_colliding:			# is_colliding(ypos: %al) : %ax=0 if(yball>=%al || yball<=%al+4)
 	cmpb	%al,-3(%bp)
 	jl	.COLLIDE_FALSE
 	add	$3,%al
@@ -240,7 +236,7 @@ init_scr:			# init_scr() : void
 	int	$0x10		# Hiding cursor
 	ret
 
-.org	0x01BE	# Partition Table
+.org	0x7DBE	# 0x01BE Partition Table
 	.fill	0x40,0x1,0x0
-.org	0x01FE	# Magic Number
+.org	0x7DFE	# 0x01FE Magic Number
 	.word	0xAA55
