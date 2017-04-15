@@ -13,5 +13,5 @@ echo "creating raw bin file"
 objcopy -O binary pongloader.elf pongloader.bin
 
 echo "building .img file"
-dd if=/dev/zero of=pongloader.img bs=512 count=12
-dd conv=notrunc if=pongloader.bin of=pongloader.img
+dd if=/dev/zero of=pongloader.img bs=512 count=1
+dd conv=notrunc if=pongloader.bin of=pongloader.img skip=62
