@@ -33,6 +33,9 @@
 
 .code16		# real mode
 start:
+        xor     %ax,%ax
+        mov     %ax,%ds
+        mov     %ax,%ss
 	mov	$0x600,%bp		# Arbitrary value, 16 bytes aligned, >512
 	mov	%bp,%sp			# Can finally use a proper stack
 	push	$0x0000			# Score Right<<8 | Score Left
